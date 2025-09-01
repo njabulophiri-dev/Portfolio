@@ -1,0 +1,16 @@
+{
+  "name": "Njabulo Phiri - Portfolio",
+  "short_name": "Njabulo Phiri",
+  "description": "Full-Stack Developer & AI Enthusiast Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#a855f7",
+  "theme_color": "#a855f7",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
