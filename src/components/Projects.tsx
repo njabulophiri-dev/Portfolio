@@ -10,16 +10,67 @@ import {
   Server,
   Cloud,
   Box,
+  Image as ImageIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
 
 interface ProjectsProps {
   projectsRef?: React.RefObject<HTMLElement>;
 }
 
+// Define types for better type safety
+type TechName =
+  | "React"
+  | "Vite"
+  | "Spring Boot"
+  | "PostgreSQL"
+  | "MySQL"
+  | "MongoDB"
+  | "Docker"
+  | "AWS"
+  | "Eureka"
+  | "React Hooks"
+  | "Routing"
+  | "Login"
+  | "Signup"
+  | "JSX"
+  | "CSS"
+  | "JavaScript"
+  | "HTML5 Canvas"
+  | "CSS3"
+  | "Game Logic"
+  | "TypeScript"
+  | "OpenWeatherMap API"
+  | "Framer Motion"
+  | "Spring Cloud Gateway"
+  | "Gemini API";
+
+interface TechIcon {
+  icon: React.ComponentType<any>;
+  color: string;
+}
+
+interface ProjectLink {
+  live: string;
+  github: string;
+}
+
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  tech: TechName[];
+  role: string;
+  links: ProjectLink;
+  icon: React.ComponentType<any>;
+  color: string;
+  hasImage: boolean;
+}
+
 // Tech badges with icons and colors
-const techIcons = {
+const techIcons: Record<TechName, TechIcon> = {
   React: { icon: Code, color: "text-blue-400" },
   Vite: { icon: Code, color: "text-purple-400" },
   "Spring Boot": { icon: Server, color: "text-green-600" },
@@ -42,10 +93,12 @@ const techIcons = {
   TypeScript: { icon: Code, color: "text-blue-600" },
   "OpenWeatherMap API": { icon: Cloud, color: "text-green-500" },
   "Framer Motion": { icon: Code, color: "text-purple-500" },
+  "Spring Cloud Gateway": { icon: Server, color: "text-indigo-500" },
+  "Gemini API": { icon: Brain, color: "text-amber-500" },
 };
 
-// Projects
-const projects = [
+// Projects data with public folder paths
+const projectsData: Project[] = [
   {
     title: "PacMan JS Game",
     description:
@@ -59,6 +112,7 @@ const projects = [
     },
     icon: Play,
     color: "from-yellow-500 to-orange-500",
+    hasImage: true,
   },
   {
     title: "React Weather App",
@@ -73,6 +127,7 @@ const projects = [
     },
     icon: Code,
     color: "from-blue-500 to-cyan-500",
+    hasImage: true,
   },
   {
     title: "Food Delivery E-commerce",
@@ -96,12 +151,13 @@ const projects = [
     },
     icon: Smartphone,
     color: "from-green-500 to-emerald-500",
+    hasImage: true,
   },
   {
     title: "Full-Stack Training App",
     description:
       "Microservices Spring Boot app, utilising MongoDB, MySQL, PostgreSQL, and Eureka server to interconnect services. React frontend, Spring Cloud Gateway, Gemini API, Docker, and AWS.",
-    image: "/training-app-screenshot.png",
+    image: "", // Empty string for mock image
     tech: [
       "Spring Boot",
       "PostgreSQL",
@@ -121,6 +177,7 @@ const projects = [
     },
     icon: Brain,
     color: "from-purple-500 to-pink-500",
+    hasImage: false,
   },
 ];
 
@@ -144,6 +201,214 @@ const badgeVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
+// Mock image component for the training app
+const MockTrainingAppImage = () => {
+  return (
+    <div className="w-full h-full bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 flex items-center justify-center p-6">
+      <div className="text-center text-white">
+        <div className="flex justify-center mb-4">
+          <div className="flex items-center space-x-2 bg-white/20 p-3 rounded-full">
+            <Brain size={32} className="text-white" />
+            <Server size={32} className="text-white" />
+            <Database size={32} className="text-white" />
+            <Cloud size={32} className="text-white" />
+          </div>
+        </div>
+        <h3 className="text-xl font-bold mb-2">Full-Stack Training App</h3>
+        <p className="text-sm opacity-90 max-w-md">
+          Microservices Architecture • Spring Boot • Multiple Databases • React
+          Frontend
+          <br />
+          Docker • AWS • API Gateway • AI Integration
+        </p>
+        <div className="mt-4 flex justify-center space-x-2">
+          {["Spring", "React", "PostgreSQL", "MongoDB", "Docker", "AWS"].map(
+            (tech) => (
+              <span
+                key={tech}
+                className="bg-white/20 px-2 py-1 rounded text-xs"
+              >
+                {tech}
+              </span>
+            )
+          )}
+        </div>
+        <div className="mt-6 animate-pulse">
+          <div className="text-sm italic">Coming Soon</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ProjectCard component for better separation of concerns
+const ProjectCard = ({ project }: { project: Project }) => {
+  const isComingSoon = project.links.live === "#";
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
+  return (
+    <motion.div
+      variants={itemVariants}
+      whileHover={{
+        y: -6,
+        boxShadow: "0px 15px 30px rgba(0,0,0,0.15)",
+      }}
+      className="group flex"
+    >
+      <Card className="glass border-card-border overflow-hidden hover-glow transition-all duration-500 flex flex-col h-full w-full">
+        <div className="relative flex-1 flex flex-col">
+          {/* Project Image */}
+          <div className="aspect-video relative overflow-hidden group">
+            {!project.hasImage || imageError ? (
+              <MockTrainingAppImage />
+            ) : (
+              <motion.img
+                src={project.image}
+                alt={`Screenshot of ${project.title}`}
+                className="object-cover w-full h-full"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.5 }}
+                onError={handleImageError}
+              />
+            )}
+
+            <motion.div className="absolute inset-0 flex items-center justify-center">
+              <project.icon size={40} className="text-white/80" />
+            </motion.div>
+
+            {/* Hover Buttons / Coming Soon */}
+            <motion.div
+              className={`absolute inset-0 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4 ${
+                isComingSoon
+                  ? "bg-black/70"
+                  : "bg-black/0 group-hover:bg-black/40 opacity-0 group-hover:opacity-100"
+              }`}
+              initial={{ scale: 0.95 }}
+              whileHover={{ scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              {isComingSoon ? (
+                <>
+                  <motion.div className="text-white text-base md:text-lg font-semibold tracking-wider relative z-10 animate-pulse text-center">
+                    Coming Soon
+                  </motion.div>
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center"
+                    animate={{ rotate: [0, 360] }}
+                    transition={{
+                      duration: 10,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  >
+                    <Brain size={60} className="text-white/20" />
+                  </motion.div>
+                </>
+              ) : (
+                <>
+                  <Button
+                    size="sm"
+                    className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-xs md:text-sm"
+                    asChild
+                  >
+                    <a
+                      href={project.links.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View live demo of ${project.title}`}
+                    >
+                      <ExternalLink size={14} className="mr-1 md:mr-2" />
+                      Live Demo
+                    </a>
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="border-white/20 text-white hover:bg-white/20 text-xs md:text-sm"
+                    asChild
+                  >
+                    <a
+                      href={project.links.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View source code of ${project.title}`}
+                    >
+                      <Github size={14} className="mr-1 md:mr-2" />
+                      View Code
+                    </a>
+                  </Button>
+                </>
+              )}
+            </motion.div>
+          </div>
+
+          {/* Card Content */}
+          <CardContent className="p-4 md:p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 className="text-lg md:text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                {project.title}
+              </h3>
+              <p className="text-xs md:text-sm text-muted-foreground mb-2 italic">
+                {project.role}
+              </p>
+              <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4 line-clamp-3">
+                {project.description}
+              </p>
+
+              {/* Tech badges */}
+              <motion.div
+                variants={badgeContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-30px" }}
+                className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4"
+              >
+                {project.tech.map((tech) => {
+                  const TechIcon = techIcons[tech]?.icon || Code;
+                  const colorClass = techIcons[tech]?.color || "text-white";
+                  const isMainTech = [
+                    "React",
+                    "Spring Boot",
+                    "Docker",
+                    "AWS",
+                    "PostgreSQL",
+                    "MongoDB",
+                    "MySQL",
+                    "Eureka",
+                    "JavaScript",
+                    "TypeScript",
+                  ].includes(tech);
+
+                  return (
+                    <motion.span
+                      key={tech}
+                      variants={badgeVariants}
+                      className={`flex items-center gap-1 px-2 md:px-3 py-1 text-[10px] md:text-xs font-medium rounded-full border border-card-border transition-colors ${
+                        isMainTech
+                          ? "bg-gradient-to-r from-primary to-secondary text-white hover:scale-105"
+                          : "bg-accent text-muted-foreground hover:border-primary/50"
+                      }`}
+                    >
+                      {TechIcon && (
+                        <TechIcon size={10} className={colorClass} />
+                      )}
+                      {tech}
+                    </motion.span>
+                  );
+                })}
+              </motion.div>
+            </div>
+          </CardContent>
+        </div>
+      </Card>
+    </motion.div>
+  );
+};
+
 const Projects = ({ projectsRef }: ProjectsProps) => {
   return (
     <section
@@ -151,11 +416,7 @@ const Projects = ({ projectsRef }: ProjectsProps) => {
       ref={projectsRef}
       className="py-16 md:py-20 relative"
     >
-      {" "}
-      {/* Better padding */}
       <div className="container mx-auto px-4 sm:px-6">
-        {" "}
-        {/* Better padding */}
         {/* Header */}
         <motion.div
           initial="hidden"
@@ -179,6 +440,7 @@ const Projects = ({ projectsRef }: ProjectsProps) => {
             applications.
           </motion.p>
         </motion.div>
+
         {/* Projects Grid */}
         <motion.div
           variants={containerVariants}
@@ -187,179 +449,11 @@ const Projects = ({ projectsRef }: ProjectsProps) => {
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          {projects.map((project) => {
-            const isComingSoon = project.links.live === "#";
-
-            return (
-              <motion.div
-                key={project.title}
-                variants={itemVariants}
-                whileHover={{
-                  y: -6,
-                  boxShadow: "0px 15px 30px rgba(0,0,0,0.15)",
-                }}
-                className="group flex"
-              >
-                <Card className="glass border-card-border overflow-hidden hover-glow transition-all duration-500 flex flex-col h-full w-full">
-                  <div className="relative flex-1 flex flex-col">
-                    {/* Project Image */}
-                    <div className="aspect-video relative overflow-hidden group">
-                      <motion.img
-                        src={project.image}
-                        alt={`${project.title} screenshot`}
-                        className="object-cover w-full h-full"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.5 }}
-                      />
-                      <motion.div className="absolute inset-0 flex items-center justify-center">
-                        <project.icon size={40} className="text-white/80" />{" "}
-                        {/* Better icon sizing */}
-                      </motion.div>
-
-                      {/* Hover Buttons / Coming Soon */}
-                      <motion.div
-                        className={`absolute inset-0 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4 ${
-                          isComingSoon
-                            ? "bg-black/70"
-                            : "bg-black/0 group-hover:bg-black/40 opacity-0 group-hover:opacity-100"
-                        }`}
-                        initial={{ scale: 0.95 }}
-                        whileHover={{ scale: 1 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        {isComingSoon ? (
-                          <>
-                            <motion.div className="text-white text-base md:text-lg font-semibold tracking-wider relative z-10 animate-pulse text-center">
-                              {" "}
-                              {/* Better text scaling */}
-                              Coming Soon
-                            </motion.div>
-                            <motion.div
-                              className="absolute inset-0 flex items-center justify-center"
-                              animate={{ rotate: [0, 360] }}
-                              transition={{
-                                duration: 10,
-                                repeat: Infinity,
-                                ease: "linear",
-                              }}
-                            >
-                              <Brain size={60} className="text-white/20" />{" "}
-                              {/* Better icon sizing */}
-                            </motion.div>
-                          </>
-                        ) : (
-                          <>
-                            <Button
-                              size="sm"
-                              className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-xs md:text-sm"
-                              asChild
-                            >
-                              <a
-                                href={project.links.live}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <ExternalLink
-                                  size={14}
-                                  className="mr-1 md:mr-2"
-                                />{" "}
-                                {/* Better icon sizing */}
-                                Live Demo
-                              </a>
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="border-white/20 text-white hover:bg-white/20 text-xs md:text-sm"
-                              asChild
-                            >
-                              <a
-                                href={project.links.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <Github size={14} className="mr-1 md:mr-2" />{" "}
-                                {/* Better icon sizing */}
-                                View Code
-                              </a>
-                            </Button>
-                          </>
-                        )}
-                      </motion.div>
-                    </div>
-
-                    {/* Card Content */}
-                    <CardContent className="p-4 md:p-6 flex-1 flex flex-col justify-between">
-                      {" "}
-                      {/* Better padding */}
-                      <div>
-                        <h3 className="text-lg md:text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-                          {" "}
-                          {/* Better text scaling */}
-                          {project.title}
-                        </h3>
-                        <p className="text-xs md:text-sm text-muted-foreground mb-2 italic">
-                          {" "}
-                          {/* Better text scaling */}
-                          {project.role}
-                        </p>
-                        <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4 line-clamp-3">
-                          {" "}
-                          {/* Better text scaling */}
-                          {project.description}
-                        </p>
-
-                        {/* Tech badges */}
-                        <motion.div
-                          variants={badgeContainer}
-                          initial="hidden"
-                          whileInView="visible"
-                          viewport={{ once: true, margin: "-30px" }}
-                          className="flex flex-wrap gap-1.5 md:gap-2 mb-3 md:mb-4"
-                        >
-                          {project.tech.map((tech) => {
-                            const TechIcon = techIcons[tech]?.icon || Code;
-                            const colorClass =
-                              techIcons[tech]?.color || "text-white";
-                            const isMainTech = [
-                              "React",
-                              "Spring Boot",
-                              "Docker",
-                              "AWS",
-                              "PostgreSQL",
-                              "MongoDB",
-                              "MySQL",
-                              "Eureka",
-                              "JavaScript",
-                              "TypeScript",
-                            ].includes(tech);
-
-                            return (
-                              <motion.span
-                                key={tech}
-                                variants={badgeVariants}
-                                className={`flex items-center gap-1 px-2 md:px-3 py-1 text-[10px] md:text-xs font-medium rounded-full border border-card-border transition-colors ${
-                                  isMainTech
-                                    ? "bg-gradient-to-r from-primary to-secondary text-white hover:scale-105"
-                                    : "bg-accent text-muted-foreground hover:border-primary/50"
-                                }`}
-                              >
-                                {TechIcon && (
-                                  <TechIcon size={10} className={colorClass} />
-                                )}
-                                {tech}
-                              </motion.span>
-                            );
-                          })}
-                        </motion.div>
-                      </div>
-                    </CardContent>
-                  </div>
-                </Card>
-              </motion.div>
-            );
-          })}
+          {projectsData.map((project) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
         </motion.div>
+
         {/* View More Projects */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -378,8 +472,9 @@ const Projects = ({ projectsRef }: ProjectsProps) => {
               href="https://github.com/njabulophiri-dev"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="View all projects on GitHub"
             >
-              <Github size={16} className="mr-2" /> {/* Better icon sizing */}
+              <Github size={16} className="mr-2" />
               View All Projects on GitHub
             </a>
           </Button>
