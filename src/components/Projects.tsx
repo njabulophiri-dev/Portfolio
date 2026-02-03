@@ -45,7 +45,15 @@ type TechName =
   | "OpenWeatherMap API"
   | "Framer Motion"
   | "Spring Cloud Gateway"
+<<<<<<< HEAD
   | "Gemini API";
+=======
+  | "Gemini API"
+  | "Next.js"
+  | "Prisma"
+  | "Tailwind"
+  | "Vercel";
+>>>>>>> 7370ec7 ((chore): Updated project cards)
 
 interface TechIcon {
   icon: React.ComponentType<any>;
@@ -95,6 +103,14 @@ const techIcons: Record<TechName, TechIcon> = {
   "Framer Motion": { icon: Code, color: "text-purple-500" },
   "Spring Cloud Gateway": { icon: Server, color: "text-indigo-500" },
   "Gemini API": { icon: Brain, color: "text-amber-500" },
+<<<<<<< HEAD
+=======
+  "Next.js": { icon: Code, color: "text-white" },
+  Prisma: { icon: Database, color: "text-indigo-500" },
+  Tailwind: { icon: Code, color: "text-cyan-400" },
+  Vercel: { icon: Cloud, color: "text-white" },
+
+>>>>>>> 7370ec7 ((chore): Updated project cards)
 };
 
 // Projects data with public folder paths
@@ -153,6 +169,7 @@ const projectsData: Project[] = [
     color: "from-green-500 to-emerald-500",
     hasImage: true,
   },
+<<<<<<< HEAD
   {
     title: "Full-Stack Training App",
     description:
@@ -177,6 +194,21 @@ const projectsData: Project[] = [
     },
     icon: Brain,
     color: "from-purple-500 to-pink-500",
+=======
+    {
+    title: "LoadShare Pro",
+    description:
+      "A production-grade web platform helping users discover businesses with backup power during load-shedding. Built with a backend-first approach, focusing on domain modeling, data integrity and scalable architecture.",
+    image: "/loadshare-pro-screenshot.png", // add later when UI exists
+    tech: ["Next.js", "PostgreSQL", "Prisma", "Tailwind", "Vercel", "Routing", "Login", "Signup", "TypeScript"],
+    role: "Full-Stack Developer",
+    links: {
+      live: "#", // will become real later
+      github: "https://github.com/njabulophiri-dev/loadshare-pro",
+    },
+    icon: Cloud,
+    color: "from-orange-500 to-red-500",
+>>>>>>> 7370ec7 ((chore): Updated project cards)
     hasImage: false,
   },
 ];
@@ -201,6 +233,7 @@ const badgeVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
+<<<<<<< HEAD
 // Mock image component for the training app
 const MockTrainingAppImage = () => {
   return (
@@ -241,6 +274,8 @@ const MockTrainingAppImage = () => {
   );
 };
 
+=======
+>>>>>>> 7370ec7 ((chore): Updated project cards)
 // ProjectCard component for better separation of concerns
 const ProjectCard = ({ project }: { project: Project }) => {
   const isComingSoon = project.links.live === "#";
@@ -262,10 +297,15 @@ const ProjectCard = ({ project }: { project: Project }) => {
       <Card className="glass border-card-border overflow-hidden hover-glow transition-all duration-500 flex flex-col h-full w-full">
         <div className="relative flex-1 flex flex-col">
           {/* Project Image */}
+<<<<<<< HEAD
           <div className="aspect-video relative overflow-hidden group">
             {!project.hasImage || imageError ? (
               <MockTrainingAppImage />
             ) : (
+=======
+          <div className="aspect-video relative overflow-hidden group bg-gradient-to-br from-gray-900 to-gray-800">          
+            {project.hasImage && !imageError ? (
+>>>>>>> 7370ec7 ((chore): Updated project cards)
               <motion.img
                 src={project.image}
                 alt={`Screenshot of ${project.title}`}
@@ -274,11 +314,20 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 transition={{ duration: 0.5 }}
                 onError={handleImageError}
               />
+<<<<<<< HEAD
             )}
 
             <motion.div className="absolute inset-0 flex items-center justify-center">
               <project.icon size={40} className="text-white/80" />
             </motion.div>
+=======
+            ) : (
+
+            <div className="w-full h-full flex items-center justify-center">
+              <project.icon size={40} className="text-white/80" />
+            </div>
+            )}
+>>>>>>> 7370ec7 ((chore): Updated project cards)
 
             {/* Hover Buttons / Coming Soon */}
             <motion.div
@@ -484,4 +533,8 @@ const Projects = ({ projectsRef }: ProjectsProps) => {
   );
 };
 
+<<<<<<< HEAD
 export default Projects;
+=======
+export default Projects;
+>>>>>>> 7370ec7 ((chore): Updated project cards)
