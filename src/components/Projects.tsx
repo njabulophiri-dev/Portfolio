@@ -45,15 +45,11 @@ type TechName =
   | "OpenWeatherMap API"
   | "Framer Motion"
   | "Spring Cloud Gateway"
-<<<<<<< HEAD
-  | "Gemini API";
-=======
   | "Gemini API"
   | "Next.js"
   | "Prisma"
   | "Tailwind"
   | "Vercel";
->>>>>>> 7370ec7 ((chore): Updated project cards)
 
 interface TechIcon {
   icon: React.ComponentType<any>;
@@ -103,14 +99,10 @@ const techIcons: Record<TechName, TechIcon> = {
   "Framer Motion": { icon: Code, color: "text-purple-500" },
   "Spring Cloud Gateway": { icon: Server, color: "text-indigo-500" },
   "Gemini API": { icon: Brain, color: "text-amber-500" },
-<<<<<<< HEAD
-=======
   "Next.js": { icon: Code, color: "text-white" },
   Prisma: { icon: Database, color: "text-indigo-500" },
   Tailwind: { icon: Code, color: "text-cyan-400" },
-  Vercel: { icon: Cloud, color: "text-white" },
-
->>>>>>> 7370ec7 ((chore): Updated project cards)
+  Vercel: { icon: Cloud, color: "text-white" }
 };
 
 // Projects data with public folder paths
@@ -169,33 +161,7 @@ const projectsData: Project[] = [
     color: "from-green-500 to-emerald-500",
     hasImage: true,
   },
-<<<<<<< HEAD
   {
-    title: "Full-Stack Training App",
-    description:
-      "Microservices Spring Boot app, utilising MongoDB, MySQL, PostgreSQL, and Eureka server to interconnect services. React frontend, Spring Cloud Gateway, Gemini API, Docker, and AWS.",
-    image: "", // Empty string for mock image
-    tech: [
-      "Spring Boot",
-      "PostgreSQL",
-      "MySQL",
-      "MongoDB",
-      "Eureka",
-      "React",
-      "Spring Cloud Gateway",
-      "Docker",
-      "AWS",
-      "Gemini API",
-    ],
-    role: "Full-Stack Developer",
-    links: {
-      live: "#",
-      github: "#",
-    },
-    icon: Brain,
-    color: "from-purple-500 to-pink-500",
-=======
-    {
     title: "LoadShare Pro",
     description:
       "A production-grade web platform helping users discover businesses with backup power during load-shedding. Built with a backend-first approach, focusing on domain modeling, data integrity and scalable architecture.",
@@ -208,7 +174,6 @@ const projectsData: Project[] = [
     },
     icon: Cloud,
     color: "from-orange-500 to-red-500",
->>>>>>> 7370ec7 ((chore): Updated project cards)
     hasImage: false,
   },
 ];
@@ -233,49 +198,6 @@ const badgeVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-<<<<<<< HEAD
-// Mock image component for the training app
-const MockTrainingAppImage = () => {
-  return (
-    <div className="w-full h-full bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 flex items-center justify-center p-6">
-      <div className="text-center text-white">
-        <div className="flex justify-center mb-4">
-          <div className="flex items-center space-x-2 bg-white/20 p-3 rounded-full">
-            <Brain size={32} className="text-white" />
-            <Server size={32} className="text-white" />
-            <Database size={32} className="text-white" />
-            <Cloud size={32} className="text-white" />
-          </div>
-        </div>
-        <h3 className="text-xl font-bold mb-2">Full-Stack Training App</h3>
-        <p className="text-sm opacity-90 max-w-md">
-          Microservices Architecture • Spring Boot • Multiple Databases • React
-          Frontend
-          <br />
-          Docker • AWS • API Gateway • AI Integration
-        </p>
-        <div className="mt-4 flex justify-center space-x-2">
-          {["Spring", "React", "PostgreSQL", "MongoDB", "Docker", "AWS"].map(
-            (tech) => (
-              <span
-                key={tech}
-                className="bg-white/20 px-2 py-1 rounded text-xs"
-              >
-                {tech}
-              </span>
-            )
-          )}
-        </div>
-        <div className="mt-6 animate-pulse">
-          <div className="text-sm italic">Coming Soon</div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-=======
->>>>>>> 7370ec7 ((chore): Updated project cards)
 // ProjectCard component for better separation of concerns
 const ProjectCard = ({ project }: { project: Project }) => {
   const isComingSoon = project.links.live === "#";
@@ -297,15 +219,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
       <Card className="glass border-card-border overflow-hidden hover-glow transition-all duration-500 flex flex-col h-full w-full">
         <div className="relative flex-1 flex flex-col">
           {/* Project Image */}
-<<<<<<< HEAD
-          <div className="aspect-video relative overflow-hidden group">
-            {!project.hasImage || imageError ? (
-              <MockTrainingAppImage />
-            ) : (
-=======
           <div className="aspect-video relative overflow-hidden group bg-gradient-to-br from-gray-900 to-gray-800">          
             {project.hasImage && !imageError ? (
->>>>>>> 7370ec7 ((chore): Updated project cards)
               <motion.img
                 src={project.image}
                 alt={`Screenshot of ${project.title}`}
@@ -314,20 +229,12 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 transition={{ duration: 0.5 }}
                 onError={handleImageError}
               />
-<<<<<<< HEAD
-            )}
-
-            <motion.div className="absolute inset-0 flex items-center justify-center">
-              <project.icon size={40} className="text-white/80" />
-            </motion.div>
-=======
             ) : (
 
             <div className="w-full h-full flex items-center justify-center">
               <project.icon size={40} className="text-white/80" />
             </div>
             )}
->>>>>>> 7370ec7 ((chore): Updated project cards)
 
             {/* Hover Buttons / Coming Soon */}
             <motion.div

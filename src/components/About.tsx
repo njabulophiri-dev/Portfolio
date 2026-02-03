@@ -3,11 +3,7 @@ import { Code, Coffee, Gamepad2, Music, MapPin, Calendar } from "lucide-react";
 
 const About = () => {
   const stats = [
-<<<<<<< HEAD
-    { icon: Code, label: "Years of Experience", value: "1-2" },
-=======
     { icon: Code, label: "Years of Experience", value: "2+" },
->>>>>>> 7370ec7 ((chore): Updated project cards)
     { icon: Coffee, label: "Projects Completed", value: "10+" },
     { icon: Gamepad2, label: "Technologies Learned", value: "5-8" },
     { icon: Music, label: "Happy Clients", value: "5+" },
