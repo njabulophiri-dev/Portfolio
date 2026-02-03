@@ -478,7 +478,7 @@ const Projects = ({ projectsRef }: ProjectsProps) => {
             variants={itemVariants}
             className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-4 md:mb-6"
           >
-            Project Highlights V2
+            Project Highlights
           </motion.h2>
           <motion.p
             variants={itemVariants}
@@ -533,8 +533,4 @@ const Projects = ({ projectsRef }: ProjectsProps) => {
   );
 };
 
-<<<<<<< HEAD
 export default Projects;
-=======
-export default Projects;
->>>>>>> 7370ec7 ((chore): Updated project cards)
