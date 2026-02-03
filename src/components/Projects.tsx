@@ -478,7 +478,7 @@ const Projects = ({ projectsRef }: ProjectsProps) => {
             variants={itemVariants}
             className="text-3xl sm:text-4xl md:text-5xl font-bold gradient-text mb-4 md:mb-6"
           >
-            Project Highlights
+            Project Highlights V2
           </motion.h2>
           <motion.p
             variants={itemVariants}
